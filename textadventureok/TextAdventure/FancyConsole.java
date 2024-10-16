@@ -16,7 +16,7 @@ public class FancyConsole extends JFrame
   JScrollPane scrollPane;
   String consoleText;
   JLabel consoleImage;
-	
+	ImageIcon icon;
 
 	private final PipedInputStream inPipe = new PipedInputStream(); 
   private final PipedInputStream outPipe = new PipedInputStream(); 
@@ -50,6 +50,7 @@ public class FancyConsole extends JFrame
       taOut = new JTextArea(20, 40);
       scrollPane = new JScrollPane(taOut);
       panel.add(scrollPane, BorderLayout.CENTER);
+      icon = new ImageIcon("");
 
       consoleImage = new JLabel();
 
