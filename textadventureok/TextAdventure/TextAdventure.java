@@ -5,6 +5,9 @@ public class TextAdventure
   FancyConsole console;
   Scanner inScanner;
   Player ourHero;
+  boolean b;
+  boolean c;
+  boolean d;
 
   public TextAdventure()
   {
@@ -13,13 +16,16 @@ public class TextAdventure
 
     // feel free to change the player's starting values
     ourHero = new Player("Bob", 100, 0);
+    b = false;
+    c = false;
+    d = false;
   }
 
   public void play()
   {
     String input;
     // start of adventure. You can change this if you like
-    console.setImage("distantcity.jpg");
+    console.setImage("interogation.jpg");
 
     // ask the user for their name.
     System.out.println("What is your name?\n");
@@ -72,29 +78,65 @@ public class TextAdventure
       else if (wow.equals("Truth")||wow.equals("truth")){
         truth(3);
       }
+    }
     if(b==3){
       System.out.println("The interrogator leaves. You feel a wave of relief. \nIt immediatly leaves when you charged guilty. Your lack of evidence to prove your innocence was overwhelmed by the opposition.\nYou got a life sentence.");
-      gameEnd(0);
-    }
+      enterJail();
     }
   }
   private void truth(int a){
 
   }
-  private void enterZone1()
+  private void enterJail()
   {
-    // change image
-    // ADD CODE HERE
-
-    // describe the area/situation to the user. 
-    // Give them options for choices.
-    // ADD CODE HERE
-
-    // Take action or go to another zone based on their choice
-    // ADD CODE HERE
+    System.out.println("The jail cell looks pretty dull. There is nothing much but a barred window, your bed, and a vent. \nSo what would you like to do, "+ourHero.getName()+"? Stay or escape?");
+    String nice = inScanner.nextLine();
+      if (nice.equals("Escape")||nice.equals("escape")){
+        attemptEscape();
+    }
 
   }
+  private void attemptEscape(){
+    System.out.println("You try to escape. Which one do you want to examine first? The bed, the vent, or the window?");
+    String nice = inScanner.nextLine();
+    if (b==false&&nice.equals("vent")||nice.equals("Vent")){
+      System.out.println("You examine the vent. It looks pretty rusty. It looks pretty easy to break out, however it won't gurantee you'll be put immediatly in trouble.\nWhat would you like to do now? Vent or Examine?\n(Vent will make you go through the vent while the examine will allow you to choose a different object.): ");
+      nice = inScanner.nextLine();
+      if(nice.equals("vent")||nice.equals("Vent")){
+        b = true;
+        escape((int)Math.random()*11);
+      }
 
+    }
+    else if(nice.equals("window")||nice.equals("Window")){
+      c = true;
+    }else if (nice.equals("poster")||nice.equals("Poster")){
+      d = true;
+    }else{
+
+    }
+  }
+  private void escape(int a){
+    if (a==5){
+      System.out.println("You were lucky! There was nothing on the other side, just land.");
+      gameEnd(1);
+    }
+    else if(a>=7){
+      System.out.println("You found 2 police officers in the other side. You are forced to engage in battle.");
+      battle(1,2);
+    }else{
+
+    }
+  }
+  private void battle(int a,int q){
+    int i = 0;
+    if(a==1){
+      while(i>q){
+        i++;
+        Player cop = new Player("Cop"+i,100,10);
+      }
+    }
+  }
   private void enterZone2()
   {
     // change image
@@ -167,11 +209,10 @@ public class TextAdventure
 
   private void gameEnd(int a)
   {
-    if (a==0){
-      System.out.println("Bad ending: Perpetual Lies");
-      System.out.println("You were forced to stay in your cell for the rest of your life. You never see the light of day ever again.");
+    if (a == 1){
+      System.out.println("Neutral Ending 1: Prison Escapee");
+      System.out.println("Neutral/Bad ending, you managed to escape, without finding the true culprit.\nYou are now forced to go into hiding in order to keep yourself safe and not go back to jail.");
     }
-
     inScanner.close();
   }
 }
