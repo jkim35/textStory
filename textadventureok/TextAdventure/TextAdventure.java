@@ -123,18 +123,17 @@ public class TextAdventure
     }
     else if(a>=7){
       System.out.println("You found 2 police officers in the other side. You are forced to engage in battle.");
-      battle(1,2);
+      StartBattle(1,2);
     }else{
 
     }
   }
-  private void battle(int a,int q){
+  private void StartBattle(int a,int q){
     int i = 0;
-    if(a==1){
-      while(i>q){
-        i++;
-        Player cop = new Player("Cop"+i,100,10);
-      }
+    if(a==1&&q==2){
+      Player cop1 = new Player("Cop1",100,5);
+      Player cop2 = new Player("Cop2",100,5);
+      
     }
   }
   private void enterZone2()

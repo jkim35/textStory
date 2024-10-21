@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class Player
 {
@@ -6,12 +6,14 @@ public class Player
   int health;
   double gold;
   int monstersDefeated;
+  Scanner inScanner;
 
   public Player(String playerName, int startingHealth, double startingGold)
   {
     name = playerName;
     health = startingHealth;
     gold = startingGold;
+    inScanner = new Scanner(System.in);
   }
 
   public String getName()
@@ -53,4 +55,22 @@ public class Player
   {
     System.out.println("placeholder :3");
   }
+  public int NPCturn(int v){
+    int a = (int)(Math.random()*4)+1;
+    if(a==1){
+      System.out.println("Your opponent kicked you!");
+      return 10*v;
+    }
+    else if(a ==2){
+      
+    }
+    else if(a ==3){
+
+    }
+    else if(a ==4){
+
+    }
+  return 0;
+  }
+
 }
