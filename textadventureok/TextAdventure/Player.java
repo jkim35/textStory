@@ -55,22 +55,5 @@ public class Player
   {
     System.out.println("placeholder :3");
   }
-  public int NPCturn(int v){
-    int a = (int)(Math.random()*4)+1;
-    if(a==1){
-      System.out.println("Your opponent kicked you!");
-      return 10*v;
-    }
-    else if(a ==2){
-      
-    }
-    else if(a ==3){
-
-    }
-    else if(a ==4){
-
-    }
-  return 0;
-  }
 
 }
