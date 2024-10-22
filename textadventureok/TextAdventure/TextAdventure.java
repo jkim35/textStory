@@ -104,12 +104,11 @@ public class TextAdventure
     System.out.println("They take a long time.");
     System.out.println("You feel impatient, maybe a bit aprehensive of the result.");
     System.out.println("The door busts open.");
-    System.out.println("\"...We found that you are not the culprit, "+ourHero.getName()+". Sorry about the interrogation. Would you like to join us for the investigation? We're a bit short on people.\"\nYes or No?");
+    System.out.println("\"...We found that you are not the culprit, "+ourHero.getName()+". Sorry about the interrogation. You're free now. \"\nWould you like to solve the mystery for yourself (solve) or leave this back (leave)?");
     String we = inScanner.nextLine();
     if (we.equals("yes")||we.equals("Yes")){
-      System.out.println("You joined the investigation team.");
-    }else if(we.equals("no")||we.equals("No")){
-      System.out.println("\"Oh... oh well. Sorry about the interrogation by the way.\nPart of the job.\"");
+      System.out.println("You leave to your house. It's empty as ever.\nWithout Rowder, there is nothing here, as if the life had been sucked out of the room.\nYou find something in your kitchen. It's a paper. \n\nIt reads, \"dear, "+ourHero.getName()+", Someone is hunting me down. I am in the 2nd victim of the predator and he is going to kill me. Please, find me and find the murderer.\"\nWhat would you like to do?");
+    }else if(we.equals("leave")||we.equals("Leave")){
       gameEnd(4);
     }else{
       inWaiting();
@@ -117,6 +116,7 @@ public class TextAdventure
   }
   private void enterJail()
   {
+    console.setImage("jail.jpg");
     System.out.println("The jail cell looks pretty dull. There is nothing much but a barred window, your bed, and a vent. \nSo what would you like to do, "+ourHero.getName()+"? Stay or escape?");
     String nice = inScanner.nextLine();
       if (nice.equals("Escape")||nice.equals("escape")){
@@ -128,14 +128,19 @@ public class TextAdventure
 
   }
   private void attemptEscape(){
+    if((b&&c)&&d){
+      gameEnd(3);
+    }
     System.out.println("You try to escape. Which one do you want to examine first? The bed, the vent, or the window?");
     String nice = inScanner.nextLine();
     if (b==false&&nice.equals("vent")||nice.equals("Vent")){
-      System.out.println("You examine the vent. It looks pretty rusty. It looks pretty easy to break out, however it won't gurantee you'll be put immediatly in trouble.\nWhat would you like to do now? Vent or Examine?\n(Vent will make you go through the vent while the examine will allow you to choose a different object.): ");
-      nice = inScanner.nextLine();
-      if(nice.equals("vent")||nice.equals("Vent")){
+      System.out.println("You examine the vent. It looks pretty rusty. It looks pretty easy to break out, however it won't gurantee you'll be put immediatly in trouble.\nWhat would you like to do now? Vent or Examine?\n");
+      String qwer = inScanner.nextLine();
+      if((qwer.equals("vent"))||(qwer.equals("Vent"))){
         b = true;
-        escape((int)Math.random()*11);
+        escape((int)(Math.random()*11));
+      }else{
+        attemptEscape();
       }
 
     }
@@ -154,8 +159,6 @@ public class TextAdventure
       d = true;
     }else if(d){
       System.out.println("So, it appears that the hole in the poster is no longer here. Weird.");
-    }else if(b&&c&&d){
-      gameEnd(3);
     }else{
       attemptEscape();
       }
