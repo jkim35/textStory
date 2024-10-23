@@ -10,6 +10,9 @@ public class TextAdventure
   boolean b;
   boolean c;
   boolean d;
+  int i;
+  Player unknown;
+  int x;
 
   public TextAdventure()
   {
@@ -20,9 +23,12 @@ public class TextAdventure
     ourHero = new Player("Bob", 100, 0);
     cop1 = new Player("Cop1",100,5);
     cop2 = new Player("Cop2",100,5);
+    unknown = new Player("John",150,10);
     b = false;
     c = false;
     d = false;
+    i = 0;
+    x = 0;
   }
 
   public void play()
@@ -92,7 +98,7 @@ public class TextAdventure
     System.out.println("\"I was at my house during the incident.\"\n\"Wasn't that the place during the incident?\'\n\"...\"\n\"Do you have anything to say?\nWhat now? Agree or disagree?");
     String ok = inScanner.nextLine();
     if (ok.equals("Agree")||ok.equals("agree")){
-      System.out.println("\"Yes. It was me. I killed Mr. Rowder.\"\n\"Knew it. Bring the culprit to jail.\"");
+      System.out.println("\"Yes. It was me. I killed John.\"\n\"Knew it. Bring the culprit to jail.\"");
       enterJail();
     }else{
       System.out.println("\"That is extremely incorrect. I would never do anything against him.\"\n\"Really? We have evidence.\"\n\"Can you show them to me?\"\n\"Sure. First, you were at your house with Mr. Rowder. There were fingerprints on the body.\"\n\"Have you checked the time of the fingerprint?\"\n\"Yes. It was during the time where he was murdered.\"\n\"But I was at the kitchen during the incident. Have you checked the kitchen utensils?\"\n\"It looks like most washed away. We'll check.");
@@ -100,20 +106,111 @@ public class TextAdventure
     }
   }
   private void inWaiting(){
+    console.setImage("waiting.jpg");
     System.out.println("...");
     System.out.println("They take a long time.");
     System.out.println("You feel impatient, maybe a bit aprehensive of the result.");
     System.out.println("The door busts open.");
-    System.out.println("\"...We found that you are not the culprit, "+ourHero.getName()+". Sorry about the interrogation. You're free now. \"\nWould you like to solve the mystery for yourself (solve) or leave this back (leave)?");
+    System.out.println("\"...We found that you are not the culprit, "+ourHero.getName()+". Sorry about the interrogation. You're free now. \"\nWould you like to continue with the story?d");
     String we = inScanner.nextLine();
     if (we.equals("yes")||we.equals("Yes")){
-      System.out.println("You leave to your house. It's empty as ever.\nWithout Rowder, there is nothing here, as if the life had been sucked out of the room.\nYou find something in your kitchen. It's a paper. \n\nIt reads, \"dear, "+ourHero.getName()+", Someone is hunting me down. I am in the 2nd victim of the predator and he is going to kill me. Please, find me and find the murderer.\"\nWhat would you like to do?");
-    }else if(we.equals("leave")||we.equals("Leave")){
+      enterHouse();
+    }else if(we.equals("no")||we.equals("No")){
       gameEnd(4);
     }else{
       inWaiting();
     }
   }
+  private void enterHouse(){
+    console.setImage("house.jpg");
+    System.out.println("You leave to your house. It's empty as ever.\nYour roommate isn't here.\nIts quiet. \nYou find a note on the table, written by your roommate.");
+    System.out.println("You can barely read a handful of the words in the note.\nHello, ████, I ███████ you ████ gotten this due to ███ █████████\nIf you ████ this, the culprit may be █████\n██████.");
+    System.out.println("\nWhat would you like to do? Look or stay?");
+    String hi = inScanner.nextLine();
+    if(hi.equals("Look")||hi.equals("look")){
+      System.out.println("You look around the house. You find a similar note like the last one. \n");
+      System.out.println("Please do ███ find ███ person.\nI ███ ███ ██ hope that you ████ find him. \n Please, continue to ████ ███ him.");
+      System.out.println("Do you look or stay?");
+      hi = inScanner.nextLine();
+      if(hi.equals("Look")||hi.equals("look")){
+        System.out.println("No more notes. There looks like theres a pathway to the outdoors. \nYou never opened the door. \nWould you go out or examine?");
+        hi = inScanner.nextLine();
+        if(hi.equals("out")||hi.equals("Out")){
+          console.setImage("outdoor.jpg");
+          System.out.println("You follow the tracks to hopefully your next clue.\nTheres a person with a pencil, notepad, and a knife.\nThe face looks awfully similar, but you can't decipher it.\n\"Looks like you'll be the next target.\"\nA Battle commences.");
+          battle2();
+        }
+      }else{
+        gameEnd(4);
+      }
+    }else{
+      gameEnd(4);
+    }
+  }
+  private void battle2(){
+    while((unknown.getHealth()>=0)&&(ourHero.getHealth()>=0)){
+      i = OtherTurn();
+      if(i==-1){
+        System.out.println("Your opponent slashes you. You lose 5 health for every turn for the next 3 turns.");
+        x = 3;
+      }else{
+        ourHero.setHealth(ourHero.getHealth()-i);
+      }
+      if(x>=0){
+        System.out.println("You lose 5 health due to the slashes.");
+        ourHero.setHealth(ourHero.getHealth()-5);
+      }
+      ourHero.setHealth(ourHero.getHealth()-5);
+      System.out.println("Your health is "+ourHero.getHealth()+". Your opponents health are "+unknown.getHealth());
+        i =PlayerTurn();
+        if(i==911214){
+          System.out.println("It's too late to run.");
+        }
+        else if(i==0){
+          
+        }else{
+        unknown.setHealth(unknown.getHealth()-i);
+        }
+        System.out.println("Your health is "+ourHero.getHealth()+". Your opponents health are"+cop1.getHealth()+" "+cop2.getHealth());
+      
+    }
+      if(ourHero.getHealth()<=0){
+        System.out.println("You see the face that you just won against.\nIt appears to be a person you knew for a very long time.\nIt appears to be your roommate, John.\nApparently, he had faked his death in order to get away from the anxieties of life.\nIt still doesn't stop you to realize that he had attempted to kill you.\nDo you think he is good or bad?");
+        String test = inScanner.nextLine();
+        if(test.equals("Good")||test.equals("good")){
+          gameEnd(9);
+        }else{
+          if(ourHero.getHealth()<=50){
+            gameEnd(6);
+          }else if(ourHero.getHealth()<=100){
+            gameEnd(7);
+          }else{
+            gameEnd(8);
+          }
+        }
+
+      }else if((unknown.getHealth()<=0)){
+        
+        gameEnd(5);
+      }
+  }
+  private int OtherTurn(){
+    int a = (int)(Math.random()*4)+1;
+    if(a==1){
+      System.out.println("Your opponent used his special!");
+      return -1;
+    }
+    else if(a==2){
+      System.out.println("Your opponent kicked you!");
+      return 5;
+    }
+    else if(a==3){
+      System.out.println("Your opponent healed himself!");
+      return 0;
+    }else{
+      return 0;
+    }
+  } 
   private void enterJail()
   {
     console.setImage("jail.jpg");
@@ -134,58 +231,49 @@ public class TextAdventure
     System.out.println("You try to escape. Which one do you want to examine first? The bed, the vent, or the window?");
     String nice = inScanner.nextLine();
     if (b==false&&nice.equals("vent")||nice.equals("Vent")){
-      System.out.println("You examine the vent. It looks pretty rusty. It looks pretty easy to break out, however it won't gurantee you'll be put immediatly in trouble.\nWhat would you like to do now? Vent or Examine?\n");
-      String qwer = inScanner.nextLine();
-      if((qwer.equals("vent"))||(qwer.equals("Vent"))){
+      System.out.println("You examine the vent. It looks pretty rusty. It looks pretty easy to break out, however it won't gurantee you'll be put immediatly in trouble.\nYou go through.\n");
         b = true;
         escape((int)(Math.random()*11));
-      }else{
-        attemptEscape();
-      }
+
+    }
+    else if(c==false&&(nice.equals("window")||nice.equals("Window"))){
+      System.out.println("You examine the window, it appears to not have a long drop, and can safely end up with your freedom.\nIt is not guranteed there will be guards behind it.\n You break out of the window.");
+      c = true;
+      escape((int)(Math.random()*11));
+    }
+    else if (nice.equals("poster")||nice.equals("Poster")){
+      System.out.println("You examine the poster, it appears to have motivaional words.\nThere is nothing here.");
 
     }
     else if(b){
       System.out.println("This way seems to not exist anymore... Weird.");
       attemptEscape();
     }
-    else if(c==false&&(nice.equals("window")||nice.equals("Window"))){
-      c = true;
-    }
     else if(c){
       System.out.println("What window? Don't you remember it was removed...?");
       attemptEscape();
-    }
-    else if (nice.equals("poster")||nice.equals("Poster")){
-      d = true;
-    }else if(d){
-      System.out.println("So, it appears that the hole in the poster is no longer here. Weird.");
     }else{
       attemptEscape();
       }
   }
   private void escape(int a){
+    console.setImage("police.jpg");
     if (a==5){
       System.out.println("You were lucky! There was nothing on the other side, just land.");
       gameEnd(1);
     }
-    else if(a>=7){
-      System.out.println("You found 2 police officers in the other side. You are forced to engage in battle.");
-      StartBattle(1,2);
+    else if(a<=7){
+      System.out.println("You found 2 police officers in the other side. You are forced to engage in battle.\n");
+      battle(1);
     }else{
-
+      System.out.println("You found multiple police officers. They overwhelm you and you are but back to jail.");
+      attemptEscape();
     }
   }
-  private void StartBattle(int a,int q){
-    int i = 0;
-    if(a==1&&q==2){
-      battle(1,2);
-    }
-  }
-  public void battle(int a,int q){
-    int i = 0;
+  public void battle(int a){
     boolean stun = false;
-    if(a==1&&q==2){
-      while((cop1.getHealth()<=0&&cop2.getHealth()<=0)||ourHero.getHealth()<=0){
+    if((a==1)){
+      while((cop1.getHealth()>=0)&&(cop2.getHealth()>=0)&&(ourHero.getHealth()>=0)){
       i = NPCturn();
       if(i==-1){
         stun = true;
@@ -194,26 +282,31 @@ public class TextAdventure
       }else{
         ourHero.setHealth(ourHero.getHealth()-i);
       }
+      System.out.println("Your health is "+ourHero.getHealth()+". Your opponents health are"+cop1.getHealth()+" and "+cop2.getHealth());
       if(stun){
         System.out.println("You're stunned! You can't do anything...");
       }else{
         i =PlayerTurn();
         if(i==911214){
-          gameEnd(2);
+          endBattle(2);
+        }
+        else if(i==0){
+          
         }
         else if((int)(Math.random()*2)==1){
           cop2.setHealth(cop2.getHealth()-i);
         }else{
         cop1.setHealth(cop1.getHealth()-i);
         }
+        System.out.println("Your health is "+ourHero.getHealth()+". Your opponents health are"+cop1.getHealth()+" "+cop2.getHealth());
       }
       stun = false;
     }
-    if(ourHero.getHealth()<=0){
-      endBattle(0);
-    }else if((cop1.getHealth()<=0&&cop2.getHealth()<=0)){
-      endBattle(1);
-    }
+      if(ourHero.getHealth()<=0){
+        endBattle(0);
+      }else if((cop1.getHealth()<=0&&cop2.getHealth()<=0)){
+        endBattle(1);
+      }
       
     }
   }
@@ -228,6 +321,9 @@ public class TextAdventure
     }else if(a==2){
       System.out.println("You attempt to flee, but the cops was able to catch up to you. \nThey bring you back to your cell. However they removed the way you attempted escape.");
       enterJail();
+    }else if(a==5){
+      System.out.println("The wounds are too much. You couldn't make it to the hospital.");
+      gameEnd(5);
     }
 
   }
@@ -239,12 +335,13 @@ public class TextAdventure
     }
     else{
       System.out.println("Your opponent kicked you!");
-      return 10;
+      return 5;
     }
   }
   public int PlayerTurn(){
     System.out.println("Your turn! What would you like to do now?\n1 = Neutral attack, 2 = Special attack, 3 = Heal, 4 = Flee");
-    int a = (int)(Math.random()*3)+1;
+    
+    int a = inScanner.nextInt();
     if(a==1){
       System.out.println("You kicked your opponent!");
       return 10;
@@ -254,8 +351,8 @@ public class TextAdventure
       return 5+(int)(Math.random()*20);
     }
     else if(a ==3){
-      System.out.println("Your healed yourself for 5 health!");
-      ourHero.setHealth(ourHero.getHealth()+5);
+      System.out.println("Your healed yourself for 15 health!");
+      ourHero.setHealth(ourHero.getHealth()+15);
       return 0;
     }
     else if(a==4){
@@ -355,6 +452,22 @@ public class TextAdventure
     if(a==4){
       System.out.println("Neutral Ending 2: Bystander");
       System.out.println("Neutral ending, you remain as a bystander, nothing will happen to you, but you will forever be in questioning of the culprit.");
+    }
+    else if(a==5){
+      System.out.println("Bad Ending 3: Die Trying");
+      System.out.println("Worse/Worst ending, you couldn't make it out.");
+    }
+    else if(a ==6){
+      System.out.println("Neutral Ending 3: The hospitalized");
+      System.out.println("Neutral/Worse ending, you ratted out John without remorse before immediatly going to the hospital.");
+    }
+    else if(a ==7||a==8){
+      System.out.println("Neutral Ending 3: Normal");
+      System.out.println("You found the culprit of the murder, and return to your normal life.");
+    }
+    else if(a ==9){
+      System.out.println("True ending");
+      System.out.println("You were able to find John, and help him. No casualties happened.");
     }
     inScanner.close();
   }
