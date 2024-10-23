@@ -273,7 +273,7 @@ public class TextAdventure
   public void battle(int a){
     boolean stun = false;
     if((a==1)){
-      while((cop1.getHealth()>=0)&&(cop2.getHealth()>=0)&&(ourHero.getHealth()>=0)){
+      while(!((cop1.getHealth()<0)&&(cop2.getHealth()<0)&&(ourHero.getHealth()<0))){
       i = NPCturn();
       if(i==-1){
         stun = true;
