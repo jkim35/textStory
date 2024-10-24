@@ -38,6 +38,7 @@ public class TextAdventure
     console.setImage("interogation.jpg");
 
     // ask the user for their name.
+    System.out.println("I am not changing the text do not read too much you'll die");
     System.out.println("What is your name?\n");
     input = inScanner.nextLine();
 
@@ -302,6 +303,9 @@ public class TextAdventure
       }
       stun = false;
     }
+    ourHero.setHealth(100);
+    cop1.setHealth(100);
+    cop2.setHealth(100);
       if(ourHero.getHealth()<=0){
         endBattle(0);
       }else if((cop1.getHealth()<=0&&cop2.getHealth()<=0)){
