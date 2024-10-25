@@ -103,10 +103,10 @@ public class TextAdventure
       enterJail();
     }else{
       System.out.println("\"That is extremely incorrect. I would never do anything against him.\"\n\"Really? We have evidence.\"\n\"Can you show them to me?\"\n\"Sure. First, you were at your house with Mr. Rowder. There were fingerprints on the body.\"\n\"Have you checked the time of the fingerprint?\"\n\"Yes. It was during the time where he was murdered.\"\n\"But I was at the kitchen during the incident. Have you checked the kitchen utensils?\"\n\"It looks like most washed away. We'll check.");
-      inWaiting();
+      inWaiting1();
     }
   }
-  private void inWaiting(){
+  public void inWaiting1(){
     console.setImage("waiting.jpg");
     System.out.println("...");
     System.out.println("They take a long time.");
@@ -119,7 +119,7 @@ public class TextAdventure
     }else if(we.equals("no")||we.equals("No")){
       gameEnd(4);
     }else{
-      inWaiting();
+      inWaiting1();
     }
   }
   private void enterHouse(){
